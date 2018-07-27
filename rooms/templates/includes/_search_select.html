@@ -1,0 +1,23 @@
+<div class="card border-primary">
+    <div class="card-header bg-primary text-white">
+        <h6 class="font-weight-bold">Tipo de Busca</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                {% if rooms %}
+                    <a href="{{url_for('list_rooms')}}" class="btn btn-success active">Quartos</a>
+                {% else %}
+                    <a href="{{url_for('list_rooms')}}" class="btn btn-success">Quartos</a>
+                {% endif %}
+            </div>
+            <div class="col">
+                {% if guests %}
+                    <a href="{{url_for('list_guests')}}" class="btn btn-success active">Pessoas</a>
+                {% else %}
+                    <a href="{{url_for('list_guests')}}" class="btn btn-success">Pessoas</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

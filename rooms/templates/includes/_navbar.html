@@ -1,0 +1,51 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Achei Quartos</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('index')}}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      {% if session.user_id %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('dashboard')}}">Meus Anúncios</a>
+        </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('list_rooms')}}">Procurar</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav">
+
+      {% if session.user_id %}
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sua Conta
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{url_for('account')}}">Configurações</a>
+          <a class="dropdown-item" href="/user/change-password">Trocar Senha</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/user/sign-out">Sair</a>
+        </div>
+      </li>
+
+      {% else: %}
+      <li class="nav-item">
+        <a class="nav-link" href="/user/register">Cadastrar</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/sign-in">Entrar</a>
+      </li>
+      {% endif %}
+
+    </ul>
+
+  </div>
+</nav>

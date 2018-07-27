@@ -1,0 +1,45 @@
+<div class="card border-primary">
+    <div class="card-header bg-primary text-white">
+        <h4 class="font-weight-bold"> {{guestUser.first_name}}, procura quarto em {{guest.getCity()}}</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                <img class="img-thumbnail" src="{{url_for('send_guest_image', filename=guest.picture)}}" height="350" width="200">
+            </div>
+            <div class="col-4">
+                <div class="row justify-content-center">
+                    <div class="col-sm">
+                        <h4 class="text-center"> {{guest.get_gender_attr()}}</h4>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm">
+                        <h4 class="text-center"> {{guest.age}} anos</h4>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm">
+                        <br>
+                        <h4 class="text-center font-weight-bold">Valor Máximo:</h4>
+                        <h4 class="text-center text-success font-weight-bold">R${{guest.maxValue}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <ul class="list-group">
+                    {% if guest.work %}<li>Trabalha</li> {% endif %}
+                    {% if guest.study %}<li>Estuda</li> {% endif %}
+                    {% if guest.smoking %}<li>Fumante</li> {% endif %}
+                    {% if guest.pet %}<li>Tem Pet</li> {% endif %}
+                    {% if guest.car %}<li>Precisa de estacionamento</li> {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{guest.description}}
+            </div>
+        </div>
+    </div>
+</div>

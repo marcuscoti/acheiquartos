@@ -1,0 +1,31 @@
+{% for room in rooms %}
+<div class="card border-primary">
+    <div class="card-header bg-primary text-white">
+        <h5 class="font-weight-bold">{{room.title}}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                <img class="img-thumbnail" src="{{url_for('send_room_image', room_id=room.id, filename=room.main_image)}}" height="350" width="200">
+            </div>
+            <div class="col text-left">
+                <ul class="list-group">
+                    <li><b>Construção:</b> {{room.get_building_attr()}} </li>
+                    <li><b>Tipo:</b> {{room.get_room_attr()}} </li>
+                    <li><b>Banheiro:</b> {{room.get_bathroom_attr()}} </li>
+                    <li><b>Genêro:</b>:</b> {{room.get_gender_attr()}} </li>
+                    {% if room.furniture %}<li><b>Mobiliado</b></li>{% endif %}
+                    {% if room.include_bills %}<li><b>Contas Inclusas</b></li>{% endif %}
+                </ul>
+            </div>
+            <div class="col text-right">
+                <h4 class="text-right text-success font-weight-bold">R${{room.price}}</h4>
+                <h6 class="text-right text-primary font-weight-bold">{{room.getCity()}}</h6>
+                <h6 class="text-right text-dark font-weight-bold">Bairro: {{room.region}}</h6>
+                <a href="{{url_for('view_room', id=room.id)}}" class="btn btn-success">Mais detalhes</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{% endfor %}

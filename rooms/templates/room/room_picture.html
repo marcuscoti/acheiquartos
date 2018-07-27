@@ -1,0 +1,108 @@
+{% extends './layout.html' %}
+{% from "includes/_macros.html" import render_field %}
+
+{% block body %}
+<h1>Fotos</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Fotos</h4>
+            <form id="form" method=POST enctype=multipart/form-data>
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                        Fotos do Quarto
+                    </div>
+                    <div class="card-body">
+                        <div class="row preview">
+                            {% set vars = {'control': 1} %}
+                            {% for file in files %}
+                                <div class="col-sm-3">
+                                    {% if room.main_image == file %}
+                                        <h6>Imagem Principal</h6>
+                                    {% else %}
+                                        <br>
+                                    {% endif %}
+                                    <img class="img-thumbnail"  src="{{url_for('send_room_image', room_id=room.id, filename=file)}}" id="file_{{vars.control}}" height="120">
+                                    <a href="{{url_for('del_room_image', room_id=room.id, filename=file)}}" class="btn btn-danger btn-sm" onclick="return delImage(this);">Remover</a>
+
+                                    {% if room.main_image != file %}
+                                        <a href="{{url_for('set_main_image', room_id=room.id, filename=file)}}" class="btn btn-primary btn-sm" onclick="">Definir Principal</a>
+                                    {% endif %}
+                                </div>
+                                {% if vars.update({'control': vars.control+1}) %} {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <br>
+                                <input type=file id="image_uploads" name="files" accept=".jpg, .jpeg, .png" onchange="loadImages()" multiple>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <a href="{{url_for('dashboard')}}" class="btn btn-success">Finalizar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function loadImages(){
+        var input = document.querySelector('input[type=file]');
+        var images = document.querySelectorAll('img');
+        var curFiles = input.files;
+        var max_img = 5;
+        var can_load_img = max_img - images.length;
+        if(can_load_img == 0){
+            alert('Limite máximo de 5 fotos por anúncio, você já alcançou o limite!');
+            return;
+        }
+        if(curFiles.length === 0) {
+            alert('Nenhum arquivo selecionado.');
+            return;
+        }
+        if(curFiles.length > can_load_img) {
+            alert('Limite máximo de 5 fotos por anúncio, selecione menos fotos!');
+            return;
+        }
+        for(var i = 0; i < curFiles.length; i++) {
+            if(!validFileType(curFiles[i])){
+                alert('Formato inválido de arquivo, use somente: JPG ou PNG');
+                return;
+            }
+            if(!validFileSize(curFiles[i])){
+                alert('Arquivo muito grande, limite máximo de 1 MB por imagem.');
+                return;
+            }
+        }
+        document.getElementById("form").submit();
+    }
+
+    function validFileType(file) {
+      var fileTypes = ['image/jpg', 'image/jpeg', 'image/png']
+      for(var i = 0; i < fileTypes.length; i++) {
+        if(file.type === fileTypes[i]) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function validFileSize(file) {
+      fileSize = file.size / 1024;
+      if(fileSize > 1000){
+        return false;
+      }
+      return true;
+    }
+
+    function delImage(event){
+        $(event).parent().remove();
+        return true;
+    }
+ </script>
+
+{% endblock %}

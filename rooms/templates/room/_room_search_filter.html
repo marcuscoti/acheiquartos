@@ -1,0 +1,65 @@
+{% from "includes/_macros.html" import render_field %}
+{% from "includes/_macros.html" import render_checkbox %}
+<form method="POST" action="">
+    <div class="card border-primary">
+        <div class="card-header bg-primary text-white">
+            <h6 class="font-weight-bold">Filtros</h6>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                {{ render_field(form_filter.city, class="form-control", id="tags") }}
+                {{ render_field(form_filter.type, class="form-control") }}
+                {{ render_field(form_filter.gender, class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="amount">Faixa de valor:</label>
+                {{ render_field(form_filter.value_range, id="amount", readonly='readonly', style="border:0; color:#f6931f; font-weight:bold;") }}
+                <div id="slider-range-amount"></div>
+            </div>
+            <div class="form-group">
+                <b>Atributos do Quarto:</b><br>
+                {{ render_checkbox(form_filter.furniture, class="form-check-inline") }}<br>
+                {{ render_checkbox(form_filter.include_bills, class="form-check-inline") }}<br>
+                {{ render_checkbox(form_filter.internet, class="form-check-inline") }}<br>
+                {{ render_checkbox(form_filter.aircond, class="form-check-inline") }}<br>
+                {{ render_checkbox(form_filter.parking, class="form-check-inline") }}<br>
+                {{ render_checkbox(form_filter.elevator, class="form-check-inline") }}<br>
+                {{ render_checkbox(form_filter.smoking, class="form-check-inline") }}<br>
+                {{ render_checkbox(form_filter.pet, class="form-check-inline") }}<br>
+                {{ render_checkbox(form_filter.visits, class="form-check-inline") }}
+            </div>
+            <input name="form_filter" type="submit" value="Filtrar" class="btn btn-primary">
+            <a href="{{url_for('list_rooms')}}" class="btn btn-warning">Limpar</a>
+        </div>
+    </div>
+</form>
+
+<script>
+  $( function() {
+    var availableTags = [
+    {% for city in cities %}
+    { value: "{{city.desc}}", data: "{{city.id}}" },
+    {% endfor %}
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags,
+      minLength: 3
+    });
+  } );
+  </script>
+
+<script>
+  $( function() {
+    $( "#slider-range-amount" ).slider({
+      range: true,
+      min: 100,
+      max: 2000,
+      values: [ {{ranges.minValue}}, {{ranges.maxValue}} ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val( "R$" + ui.values[ 0 ] + " - R$" + ui.values[ 1 ] );
+      }
+    });
+    $( "#amount" ).val( "R$" + $( "#slider-range-amount" ).slider( "values", 0 ) +
+      " - R$" + $( "#slider-range-amount" ).slider( "values", 1 ) );
+  } );
+  </script>

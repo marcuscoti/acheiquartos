@@ -1,0 +1,74 @@
+
+<div class="card border-primary">
+    {% if room.active == 1 %}
+    <div class="card-header bg-primary text-white">
+        {{room.title}}
+    </div>
+    {% else: %}
+    <div class="card-header bg-warning text-black">
+        *DESATIVADO* {{room.title}}
+    </div>
+    {% endif %}
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm">
+                <img class="img-thumbnail" src="{{url_for('send_room_image', room_id=room.id, filename=room.main_image)}}" height="350" width="200">
+                <a href="{{url_for('room_picture', id=room.id)}}" class="btn btn-dark btn-sm">Alterar Foto</a>
+            </div>
+            <div class="col-sm">
+                <ul class="list-group">
+                    <li><b>Construção:</b> {{room.get_building_attr()}} </li>
+                    <li><b>Tipo:</b> {{room.get_room_attr()}} </li>
+                    <li><b>Banheiro:</b> {{room.get_bathroom_attr()}} </li>
+                    <li><b>Genêro:</b>:</b> {{room.get_gender_attr()}} </li>
+                </ul>
+            </div>
+            <div class="col-sm">
+                <ul class="list-group">
+                    <li><b>Preço:</b> R${{room.price}} </li>
+                    <li><b>Tempo mínimo (meses):</b> {{room.minRent}} </li>
+                    <li><b>Cidade:</b> {{room.getCity()}} </li>
+                </ul>
+            </div>
+            <div class="col-sm">
+                <div class="row">
+                    <div class="col-sm">
+                        <h6>Atributos do Quarto:</h6>
+                        <ul class="list-group">
+                            {% if room.furniture %}<li><b>Mobiliado</b></b></li>{% endif %}
+                            {% if room.include_bills %}<li><b>Contas Inclusas</b></b></li>{% endif %}
+                            {% if room.internet %}<li><b>Internet</b></b></li>{% endif %}
+                            {% if room.aircond %}<li><b>Ar Condicionado</b></b></li>{% endif %}
+                            {% if room.parking %}<li><b>Estacionamento</b></b></li>{% endif %}
+                            {% if room.elevator %}<li><b>Elevador</b></b></li>{% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm">
+                        <h6>Regras e Permissões:</h6>
+                        <ul class="list-group">
+                            {% if room.smoking %}<li><b>Aceita Fumantes</b></b></li>{% endif %}
+                            {% if room.pet %}<li><b>Aceita Pets</b></b></li>{% endif %}
+                            {% if room.visits %}<li><b>Aceita Visitas</b></b></li>{% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        {% if room.active == 1 %}
+            <a href="{{url_for('view_room', id=room.id)}}" class="btn btn-dark">Visualizar Anúncio</a>
+        {% endif %}
+        <a href="{{url_for('edit_room', id=room.id)}}" class="btn btn-primary">Editar</a>
+        {% if room.active == 1 %}
+        <a href="{{url_for('toggle_room_active', id=room.id)}}" class="btn btn-warning">Desativar</a>
+        {% else: %}
+        <a href="{{url_for('toggle_room_active', id=room.id)}}" class="btn btn-success">Ativar</a>
+        {% endif %}
+        <a href="{{url_for('del_room', id=room.id)}}" class="btn btn-danger">Excluir</a>
+    </div>
+</div>
+<br>

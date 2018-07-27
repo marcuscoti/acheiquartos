@@ -1,0 +1,30 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Imagem</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="img-fluid rounded mx-auto d-block" id="img-modal" src="" height=auto width="500">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+ function swipe(event) {
+   var url=event.getAttribute('src');
+   console.log(url);
+   //window.open(url,'Image','width="200px",height="200px",resizable=1');
+   var img = document.querySelector("#img-modal");
+   img.src = url;
+   $('#exampleModal').modal('toggle');
+}
+</script>

@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% from "includes/_macros.html" import render_field %}
+
+{% block body %}
+    <h1>Configurações da Conta</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5">
+            <form method="POST" action="">
+                <div class="form-group">
+                  {{ render_field(form.email, class="form-control") }}
+                </div>
+                <div class="form-group">
+                  {{ render_field(form.first_name, class="form-control") }}
+                </div>
+                <div class="form-group">
+                  {{ render_field(form.phone, class="form-control", id="phone") }}
+                </div>
+                <div class="form-group">
+                  {{ render_field(form.show_whats, class="form-control") }}
+                </div>
+                <div class="form-group">
+                  {{ render_field(form.can_email, class="form-control") }}
+                </div>
+                <p><input type="submit" value="Atualizar Perfil" class="btn btn-primary"></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+$( function() {
+  $( "#birthday" ).datepicker({
+      dateFormat: 'dd/mm/yy',
+      dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+      dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+      dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+      monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+      monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+      nextText: 'Próximo',
+      prevText: 'Anterior',
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1920:2002",
+      defaultDate: '-18y',
+      buttonText: "Choose"
+ });
+} );
+</script>
+
+<script>
+   $(document).ready(function(){
+      $('#birthday2').mask('00/00/0000', {placeholder: "__/__/____"});
+      $('#birthday').mask('00/00/0000', {placeholder: "__/__/____"}, {'translation': {0: {pattern: /[0-9*]/}}});
+   });
+   var options =  {
+          onKeyPress: function(phone, e, field, options) {
+            var masks = ['(00) 00000-0000', '(00) 0000-00009'];
+            var mask = (phone.length>14) ? masks[0] : masks[1];
+            $('#phone').mask(mask, options);
+        }};
+   $('#phone').mask('(00) 00000-0000', options);
+</script>
+{% endblock %}

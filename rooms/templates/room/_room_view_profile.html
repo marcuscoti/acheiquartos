@@ -1,0 +1,78 @@
+<div class="card border-primary">
+    <div class="card-header bg-primary text-white">
+        <h4 class="font-weight-bold"> {{room.title}} </h4>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-start">
+            <div class="col">
+                {% include 'room/_carousel.html' %}
+            </div>
+            <!--{% for file in files %}-->
+                <!--<div class="col-sm">-->
+                    <!--<img class="img-thumbnail" src="{{url_for('send_room_image', room_id=room.id, filename=file)}}" height="450" width="300" onClick="swipe(this);">-->
+                <!--</div>-->
+            <!--{% endfor %}-->
+        </div>
+        <hr>
+        <div class="row justify-content-center">
+            <div class="col-sm">
+                <h6>Informações Básicas:</h6>
+                <ul class="list-group">
+                    <li><b>Construção:</b> {{room.get_building_attr()}} </li>
+                    <li><b>Tipo:</b> {{room.get_room_attr()}} </li>
+                    <li><b>Banheiro:</b> {{room.get_bathroom_attr()}} </li>
+                    <li><b>Genêro:</b>:</b> {{room.get_gender_attr()}} </li>
+                </ul>
+            </div>
+            <div class="col-sm">
+                <h6>Atributos do Quarto:</h6>
+                <ul class="list-group">
+                    {% if room.furniture %}<li>Mobiliado</li>{% endif %}
+                    {% if room.include_bills %}<li>Contas Inclusas</li>{% endif %}
+                    {% if room.internet %}<li>Internet</li>{% endif %}
+                    {% if room.aircond %}<li>Ar Condicionado</li>{% endif %}
+                    {% if room.parking %}<li>Estacionamento</li>{% endif %}
+                    {% if room.elevator %}<li>Elevador</li>{% endif %}
+                </ul>
+            </div>
+            <div class="col-sm">
+                <h6>Regras e Permissões:</h6>
+                <ul class="list-group">
+                    {% if room.smoking %}<li>Aceita Fumantes</li>{% endif %}
+                    {% if room.pet %}<li>Aceita Pets</li>{% endif %}
+                    {% if room.visits %}<li>Aceita Visitas</li>{% endif %}
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-center">
+            <div class="col">
+                <h4 class="text-center font-weight-bold">Tipo:</h4>
+                <h4 class="text-center text-success font-weight-bold">{{room.get_room_attr()}}</h4>
+            </div>
+            <div class="col">
+                <h4 class="text-center font-weight-bold">Preço:</h4>
+                <h4 class="text-center text-success font-weight-bold">R${{room.price}}</h4>
+            </div>
+            <div class="col">
+                <h4 class="text-center font-weight-bold">Mínimo:</h4>
+                {% if room.minRent == 1 %}
+                    <h4 class="text-center text-success font-weight-bold">{{room.minRent}} mês</h4>
+                {% else %}
+                    <h4 class="text-center text-success font-weight-bold">{{room.minRent}} meses</h4>
+                {% endif %}
+            </div>
+            <div class="col">
+                <h4 class="text-center font-weight-bold">Cidade:</h4>
+                <h5 class="text-center text-success font-weight-bold">{{room.getCity()}}</h5>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-center">
+            <div class="col">
+                <h5 class="text-start font-weight-bold">Descrição:</h5>
+                {{room.description}}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+
+{% extends './layout.html' %}
+{% from "includes/_macros.html" import render_field %}
+
+{% block body %}
+
+
+<h1>Anúncio de Hospéde</h1>
+
+<div class="container">
+    <form method="POST" action="">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                        Featured
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <div class="form-group">
+                            {{ render_field(form.gender, class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ render_field(form.age, class="form-control") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ render_field(form.work, class="form-check-inline") }}
+                            {{ render_field(form.study, class="form-check-inline") }}
+                            {{ render_field(form.smoking, class="form-check-inline") }}
+                            {{ render_field(form.car, class="form-check-inline") }}
+                            {{ render_field(form.pet, class="form-check-inline") }}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                        Featured
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <div class="form-group">
+                            {{ render_field(form.state, class="form-control", id="estados") }}
+                            {{ render_field(form.city, class="form-control", id="font_cidades") }}
+                        </div>
+                        <div class="form-group">
+                            {{ render_field(form.maxValue, class="form-control valor") }}
+                        </div>
+                        <div class="form-group">
+                            {{ render_field(form.description, class="form-control") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <p><input type="submit" value={{action}} class="btn btn-primary"></p>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+    $(".valor").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl/cmd+A
+            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+C
+            (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+X
+            (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+
+<script type="text/javascript">
+    $('#estados').change(
+        function() {
+            var estado = $('#estados').val(); //Pegando o id do estado
+            $.ajax({
+                type: "GET",
+                url: "/get_cities/"+estado+"/",
+                success: function(data) {
+                    $('#font_cidades').html(data); //Se obtivermos sucesso na busca dos dados, atribuímos os dados para o select
+                }
+            });
+        }
+    );
+</script>
+
+{% endblock %}

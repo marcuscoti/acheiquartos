@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br>
+<div class="row">
+    <div class="col-3">
+        {% include 'includes/_search_select.html' %}
+        <br>
+        {% if rooms %}
+            {% include 'room/_room_search_filter.html' %}
+        {% endif %}
+
+        {% if guests %}
+            {% include 'guest/_guest_search_filter.html' %}
+        {% endif %}
+    </div>
+
+    <div class="col-9">
+        {% if rooms %}
+            {% include 'room/_room_search_item.html' %}
+        {% endif %}
+
+        {% if guests %}
+            {% include 'guest/_guest_search_item.html' %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

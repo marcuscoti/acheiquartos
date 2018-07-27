@@ -1,0 +1,56 @@
+
+<div class="card border-primary">
+    {% if guest.active == 1 %}
+    <div class="card-header bg-primary text-white">
+        {{user.first_name}}, procura quarto em {{guest.getCity()}}
+    </div>
+    {% else: %}
+    <div class="card-header bg-warning text-black">
+        *DESATIVADO* {{user.first_name}}, procura quarto em {{guest.getCity()}}
+    </div>
+    {% endif %}
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <img class="img-thumbnail" src="{{url_for('send_guest_image', filename=guest.picture)}}" height="350" width="200">
+                <a href="{{url_for('guest_picture', id=guest.id)}}" class="btn btn-dark btn-sm">Alterar Foto</a>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <ul class="list-group">
+                    <li><b>Nome:</b> {{user.first_name}} </li>
+                    <li><b>Idade:</b> {{guest.age}} </li>
+                    <li><b>Telefone:</b> {{user.phone}} </li>
+                    <li><b>Sexo:</b> {{guest.get_gender_attr()}} </li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <ul class="list-group">
+                    <li><b>Preço Máximo:</b> R${{guest.maxValue}} </li>
+                    <li><b>Cidade:</b> {{guest.getCity()}} </li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <ul class="list-group">
+                    <li><b>Trabalha:</b> {{guest.get_bool_attr('work')}} </li>
+                    <li><b>Estuda:</b> {{guest.get_bool_attr('study')}} </li>
+                    <li><b>Fuma:</b> {{guest.get_bool_attr('smoking')}} </li>
+                    <li><b>Tem animal de estimação:</b> {{guest.get_bool_attr('pet')}} </li>
+                    <li><b>Tem carro (precisa de estacionamento):</b> {{guest.get_bool_attr('car')}} </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-footer text-muted">
+        {% if guest.active == 1 %}
+            <a href="{{url_for('view_guest', id=guest.id)}}" class="btn btn-dark">Visualizar Anúncio</a>
+        {% endif %}
+        <a href="{{url_for('edit_guest', id=guest.id)}}" class="btn btn-primary">Editar</a>
+        {% if guest.active == 1 %}
+        <a href="{{url_for('toggle_guest_active', id=guest.id)}}" class="btn btn-warning">Desativar</a>
+        {% else: %}
+        <a href="{{url_for('toggle_guest_active', id=guest.id)}}" class="btn btn-success">Ativar</a>
+        {% endif %}
+        <a href="{{url_for('del_guest', id=guest.id)}}" class="btn btn-danger">Excluir</a>
+    </div>
+</div>

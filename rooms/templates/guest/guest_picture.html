@@ -1,0 +1,50 @@
+{% extends './layout.html' %}
+{% from "includes/_macros.html" import render_field %}
+
+{% block body %}
+<h1>Fotos</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5">
+            <h4>Fotos</h4>
+            <form method=POST enctype=multipart/form-data>
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                        {{user.first_name}}, {{guest.age}}, {{guest.gender}}
+                    </div>
+                    <div class="card-body">
+                        <img class="img-thumbnail" src="{{url_for('send_guest_image', filename=guest.picture)}}" height="350" width="200">
+                        <input class="btn btn-success" type=file name=file onchange="previewFile()">
+                        <input type="hidden" id="file_size" name="file_size" value="0">
+                    </div>
+                    <div class="card-footer text-muted">
+                        <input type=submit value="Salvar" class="btn btn-success">
+                        <a href="/del_guest_picture/{{guest.id}}" class="btn btn-danger">Remover Foto</a>
+                        <a href="{{url_for('dashboard')}}" class="btn btn-warning">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+   function previewFile(){
+       var preview = document.querySelector('img'); //selects the query named img
+       var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+       var reader  = new FileReader();
+       var hd_size = document.querySelector('input[name=file_size]');
+
+        if(file){
+            fileSize = file.size / 1024;
+            hd_size.value = fileSize;
+            reader.onloadend = function () { preview.src = reader.result;}
+            reader.readAsDataURL(file); //reads the data as a URL
+        }
+  }
+  //previewFile();  //calls the function named previewFile()
+ </script>
+
+{% endblock %}

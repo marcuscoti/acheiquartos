@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1>Gerenciar Anúncios</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h4>Perfil de Busca de Quarto</h4>
+            {% if not guests %}
+                <a href="{{url_for('new_guest')}}" class="btn btn-success">Novo Perfil</a>
+            {% endif %}
+            <br>
+            <br>
+            {% for guest in guests %}
+                {% include 'guest/_guest_blade.html' %}
+            {% endfor %}
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <h4>Anúncios de Quartos</h4>
+            <a href="{{url_for('new_room')}}" class="btn btn-success">Novo Anúncio de Quarto</a>
+            <br>
+            <br>
+            {% for room in rooms %}
+                {% include 'room/_room_blade.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
+
+{% endblock %}

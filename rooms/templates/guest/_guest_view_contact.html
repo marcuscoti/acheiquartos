@@ -1,0 +1,20 @@
+<div class="card border-primary">
+    <div class="card-header bg-primary text-white">
+        <h4 class="font-weight-bold"> Contato</h4>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-center">
+            {% if current_user.email %}
+                <div class="col-sm align-self-center">
+                    {% if guestUser.show_whats %}
+                        <h5 class="text-center">Telefone: {{guestUser.phone}}</h5>
+                    {% else %}
+                        <b>Usuário não permite contato por telefone</b>
+                    {% endif %}
+                </div>
+            {% else %}
+                <b>Faça login para ver o contato</b>
+            {% endif %}
+        </div>
+    </div>
+</div>

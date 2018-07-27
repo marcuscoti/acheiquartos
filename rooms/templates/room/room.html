@@ -1,0 +1,21 @@
+{% extends './layout.html' %}
+{% from "includes/_macros.html" import render_field %}
+
+{% block body %}
+<br>
+<br>
+<div class="row">
+    <div class="col-8">
+        {% include 'room/_room_view_profile.html' %}
+    </div>
+    <div class="col-4">
+        {% include 'room/_room_view_contact.html' %}
+    </div>
+</div>
+<br>
+<div class="row">
+
+</div>
+<br>
+<br>
+{% endblock %}

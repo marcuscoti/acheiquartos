@@ -1,0 +1,34 @@
+{% for guest in guests %}
+<div class="card border-primary">
+    <div class="card-header bg-primary text-white">
+        <h5 class="font-weight-bold">{{guest.getUser().first_name}} - {{guest.age}} anos</h5>
+    </div>
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-3 align-self-center">
+                <img class="img-thumbnail" src="{{url_for('send_guest_image', filename=guest.picture)}}" height="300" width="180">
+            </div>
+            <div class="col-6 align-self-center">
+                {% if guest.description %}
+                {{guest.description[:200]}}...
+                {% else %}
+                <ul class="list-group">
+                    <li><b>Trabalha:</b> {{guest.get_bool_attr('work')}} </li>
+                    <li><b>Estuda:</b> {{guest.get_bool_attr('study')}} </li>
+                    <li><b>Fuma:</b> {{guest.get_bool_attr('smoking')}} </li>
+                    <li><b>Tem animal de estimação:</b> {{guest.get_bool_attr('pet')}} </li>
+                    <li><b>Tem carro (precisa de estacionamento):</b> {{guest.get_bool_attr('car')}} </li>
+                </ul>
+                {% endif %}
+            </div>
+            <div class="col-3 align-self-center">
+                <h4 class="text-center font-weight-bold">Orçamento:</h4>
+                <h4 class="text-center text-success font-weight-bold">R${{guest.maxValue}}</h4>
+                <h5 class="text-center text-primary font-weight-bold">{{guest.getCity()}}</h5>
+                <a href="{{url_for('view_guest', id=guest.id)}}" class="btn btn-success">Mais detalhes</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{% endfor %}
